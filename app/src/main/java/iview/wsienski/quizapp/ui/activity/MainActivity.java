@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity
         activityComponent = DaggerActivityComponent.builder()
                 .appComponent(getApp().getAppComponent()).build();
         activityComponent.inject(this);
+
+        if (savedInstanceState == null) {
+            loadDefaultFragment();
+        }
     }
 
     protected QuizApp getApp() {
@@ -187,5 +191,9 @@ public class MainActivity extends AppCompatActivity
     public void onStop() {
         eventBus.unregister(this);
         super.onStop();
+    }
+
+    void loadDefaultFragment(){
+        setContent(new QuizzesFragment() ,false);
     }
 }
