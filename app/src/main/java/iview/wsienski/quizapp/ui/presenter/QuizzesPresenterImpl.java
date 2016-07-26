@@ -1,7 +1,10 @@
 package iview.wsienski.quizapp.ui.presenter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
+import iview.wsienski.quizapp.events.MsgEvent;
 import iview.wsienski.quizapp.network.QuizApi;
 import iview.wsienski.quizapp.network.dao.Quizzes;
 import iview.wsienski.quizapp.ui.view.QuizzesView;
@@ -18,11 +21,13 @@ public class QuizzesPresenterImpl implements QuizzesPresenter {
 
     private QuizzesView quizzesView;
     private QuizApi quizApi;
+    private EventBus eventBus;
     private Subscription subscription;
 
     @Inject
-    public QuizzesPresenterImpl(QuizApi apiService) {
+    public QuizzesPresenterImpl(QuizApi apiService, EventBus eventBus) {
         this.quizApi = apiService;
+        this.eventBus = eventBus;
     }
 
     @Override
@@ -41,7 +46,7 @@ public class QuizzesPresenterImpl implements QuizzesPresenter {
                     @Override
                     public void onError(Throwable e) {
                         quizzesView.showProgress(false);
-                        quizzesView.showError("Error download");
+                        eventBus.post(new MsgEvent(false, "Przepraszamy. Problem połączenia z serwerem :("));
                     }
 
                     @Override

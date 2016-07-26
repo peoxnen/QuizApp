@@ -2,6 +2,8 @@ package iview.wsienski.quizapp.di.component;
 
 import android.content.SharedPreferences;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -25,5 +27,7 @@ public interface AppComponent {
     Retrofit retrofit();
     OkHttpClient okHttpClient();
     SharedPreferences sharedPreferences();
+
+    EventBus eventBus();
 
 }
