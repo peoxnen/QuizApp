@@ -11,7 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import iview.wsienski.quizapp.QuizApp;
 import iview.wsienski.quizapp.R;
+import iview.wsienski.quizapp.di.component.ActivityComponent;
+import iview.wsienski.quizapp.di.component.DaggerActivityComponent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,10 +27,13 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    private ActivityComponent activityComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -34,6 +41,18 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        activityComponent = DaggerActivityComponent.builder()
+                .appComponent(getApp().getAppComponent()).build();
+        activityComponent.inject(this);
+    }
+
+    protected QuizApp getApp() {
+        return (QuizApp) getApplication();
+    }
+
+    public ActivityComponent getActivityCompontent() {
+        return activityComponent;
     }
 
     @Override
