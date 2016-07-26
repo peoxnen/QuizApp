@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -41,6 +44,9 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
         Timber.d("positon "+position);
         Quiz quiz = quizzes.get(position);
         holder.getTitle().setText(quiz.getTitle());
+        holder.getDesc().setText(quiz.getContent());
+        String url = quiz.getMainPhoto().getUrl();
+        Glide.with(context).load(url).into(holder.getImageView());
     }
 
     @Override
@@ -52,6 +58,10 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
 
         @BindView(R.id.title)
         TextView title;
+        @BindView(R.id.desc)
+        TextView desc;
+        @BindView(R.id.image)
+        ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,5 +75,22 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
         public void setTitle(TextView title) {
             this.title = title;
         }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public void setImageView(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        public TextView getDesc() {
+            return desc;
+        }
+
+        public void setDesc(TextView desc) {
+            this.desc = desc;
+        }
+
     }
 }
