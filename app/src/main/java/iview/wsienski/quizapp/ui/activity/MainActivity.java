@@ -1,5 +1,8 @@
 package iview.wsienski.quizapp.ui.activity;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +19,7 @@ import iview.wsienski.quizapp.QuizApp;
 import iview.wsienski.quizapp.R;
 import iview.wsienski.quizapp.di.component.ActivityComponent;
 import iview.wsienski.quizapp.di.component.DaggerActivityComponent;
+import iview.wsienski.quizapp.ui.fragment.QuizzesFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,7 +61,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -92,15 +95,29 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Fragment fragment = null;
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+           fragment = new QuizzesFragment();
         } else if (id == R.id.nav_gallery) {
-
+            fragment = new QuizzesFragment();
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        setContent(fragment, false);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * Zmienia zawartość strony na zadany Fragment.
+     *
+     * @param fragment fragment, który ma zostać dodany w miejsce bieżącej zawartości
+     */
+    public void setContent(Fragment fragment, boolean addToBackStack) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction trans = fragmentManager.beginTransaction();
+        trans.replace(R.id.fragment_container, fragment);
+        if (addToBackStack)
+            trans.addToBackStack(null);
+        trans.commit();
+
     }
 }
