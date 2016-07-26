@@ -9,4 +9,6 @@
     <string name="menu_quizes_started">Rozpoczęte Quizy</string>
     <string name="nav_header_subtitle">Sprawdź swoją wiedzę!</string>
     <string name="base_url">http://quiz.o2.pl/api/v1/</string>
+    <string name="dialog_aplogize_title">Błąd</string>
+    <string name="dialog_button_ok">Ok</string>
 </resources>
