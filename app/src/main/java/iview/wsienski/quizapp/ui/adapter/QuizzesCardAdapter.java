@@ -5,10 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -50,6 +50,9 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
         holder.getResult().setBackground(getBg(position % 2 == 0));
         String url = quiz.getMainPhoto().getUrl();
         Glide.with(context).load(url).centerCrop().into(holder.getImageView());
+        holder.getCardView().setOnClickListener(view -> {
+            Toast.makeText(context,"onClick", Toast.LENGTH_LONG).show();
+        });
     }
 
     Drawable getBg(boolean isRed){
@@ -85,10 +88,12 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
         ImageView imageView;
         @BindView(R.id.result)
         TextView result;
+        private CardView cardView;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(CardView itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            cardView = itemView;
         }
 
         public TextView getTitle() {
@@ -121,6 +126,10 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
 
         public void setResult(TextView result) {
             this.result = result;
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
     }
 }
