@@ -13,4 +13,7 @@ public interface QuizApi {
     @GET("quizzes/{v1}/{v2}")
     Observable<Quizzes> quizzes(@Path("v1") int v1, @Path("v2") int v2);
 
+    @GET("quiz/{id}/0")
+    Observable<Quizzes> quiz(@Path("id") int id);
+
 }
