@@ -1,6 +1,7 @@
 package iview.wsienski.quizapp.ui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,8 +46,28 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
         Quiz quiz = quizzes.get(position);
         holder.getTitle().setText(quiz.getTitle());
         holder.getDesc().setText(quiz.getContent());
+        holder.getResult().setText("100%");
+        holder.getResult().setBackground(getBg(position % 2 == 0));
         String url = quiz.getMainPhoto().getUrl();
-        Glide.with(context).load(url).into(holder.getImageView());
+        Glide.with(context).load(url).centerCrop().into(holder.getImageView());
+    }
+
+    Drawable getBg(boolean isRed){
+        Drawable drawable;
+        int res;
+
+        if(isRed){
+            res = R.drawable.oval_red;
+        }else{
+            res= R.drawable.oval_green;
+        }
+
+        if(android.os.Build.VERSION.SDK_INT >= 21){
+            drawable = context.getResources().getDrawable(res, context.getTheme());
+        } else {
+            drawable = context.getResources().getDrawable(res);
+        }
+        return drawable;
     }
 
     @Override
@@ -62,6 +83,8 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
         TextView desc;
         @BindView(R.id.image)
         ImageView imageView;
+        @BindView(R.id.result)
+        TextView result;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -92,5 +115,12 @@ public class QuizzesCardAdapter extends RecyclerView.Adapter<QuizzesCardAdapter.
             this.desc = desc;
         }
 
+        public TextView getResult() {
+            return result;
+        }
+
+        public void setResult(TextView result) {
+            this.result = result;
+        }
     }
 }

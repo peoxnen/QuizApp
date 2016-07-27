@@ -5,5 +5,7 @@
     <color name="colorAccent">@color/wp_color_red</color>
     <color name="wp_color_red">#a45357</color>
     <color name="white">@android:color/white</color>
-    <color name="transparent_bg">#80FF0000</color>
+    <color name="green">#0be11d</color>
+    <color name="transparent_bg_red">#80FF0000</color>
+    <color name="transparent_bg_green">#800be11d</color>
 </resources>
